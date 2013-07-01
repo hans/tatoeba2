@@ -106,7 +106,65 @@ class MenuHelper extends AppHelper
     }
 
 
-    /** 
+    /**
+     * Display button to add an audio recording.
+     *
+     * @param int    $sentenceId Id of the original sentence.
+     * @param bool   $isLogged   True if user is logged in, false otherwise.
+     *
+     * @return void
+     */
+    public function recordButton($sentenceId, $isLogged)
+    {
+        $recordButton = $this->Html->image(
+            IMG_PATH . 'audio.png',
+            array(
+                'alt'=>__('Record audio', true),
+                'title'=>__('Record audio', true),
+                'width' => 20,
+                'height' => 16
+            )
+        );
+        ?>
+
+        <li class="option recordLink"
+            id="record_<?php echo $sentenceId; ?>">
+
+        <?php
+        if ($isLogged) {
+            $this->Javascript->link('recorder.js', false);
+            $this->Javascript->link('sentences.add_recording.js', false);
+            ?>
+
+            <script type='text/javascript'>
+            $(document).ready(function() {
+                $('#record_<?php echo $sentenceId; ?>').data(
+                    'sentenceId',
+                    <?php echo $sentenceId; ?>
+                );
+            });
+            </script>
+            <a><?php echo $recordButton;?></a>
+           <?php
+        } else {
+            echo $this->Html->link(
+                $recordButton,
+                array(
+                    "controller" => "users",
+                    "action" => "login"
+                ),
+                array(),
+                null,
+                false
+            );
+        }
+        ?>
+        </li>
+    <?php
+    }
+
+
+    /**
      * Display button to notify the chinese sentence is in
      * simplified script
      *
@@ -485,6 +543,9 @@ class MenuHelper extends AppHelper
         // Translate
         $this->translateButton($sentenceId, $ownerName, $isLogged);
         
+        // Record audio
+        $this->recordButton($sentenceId, $isLogged);
+
         // Adopt
         $currentUserName = CurrentUser::get('username');
         $isAlreadyAdoptedBySomeoneElse = (!empty($ownerName) 
