@@ -110,6 +110,10 @@ class SentencesHelper extends AppHelper
         
         // Form to add a new translation
         $this->_displayNewTranslationForm($id, $withAudio);
+
+        // Form to add a new recording
+        $this->_displayNewRecordingForm($id);
+
         ?>
         <div id="_<?php echo $id; ?>_translations" class="translations">
             <div></div>
@@ -221,8 +225,8 @@ class SentencesHelper extends AppHelper
             );
         });
         </script>
-        <div id="translation_for_<?php echo $id; ?>" class="addTranslations">
-        
+        <div id="translation_for_<?php echo $id; ?>" class="sentenceForm addTranslations">
+
             <?php
             // Input field
             echo $this->Form->textarea(
@@ -285,7 +289,88 @@ class SentencesHelper extends AppHelper
             ?>
             </p>
             </div>
-        
+
+        </div>
+        <?php
+    }
+
+
+    /**
+     * Displays the form to add an audio recording of a sentence. Appears when
+     * clicking on the record icon.
+     *
+     * @param int  $id        The id of the sentence to translate.
+     *
+     * @return void
+     */
+    private function _displayNewRecordingForm($id)
+    {
+        ?>
+        <div id="recording_for_<?php echo $id; ?>" class="sentenceForm addRecording">
+
+            <?php
+
+            // Start recording
+            echo $this->Form->button(
+                'recording',
+                array(
+                    'value' => __('Record', true),
+                    'id' => '_'.$id.'_record'
+                )
+            );
+
+            // Stop recording
+            echo $this->Form->button(
+                'recording',
+                array(
+                    'value' => __('Stop', true),
+                    'id' => '_'.$id.'_stop_record'
+                )
+            );
+
+            // Replay recording
+            echo $this->Form->button(
+                'recording',
+                array(
+                    'value' => __('Replay', true),
+                    'id' => '_'.$id.'_play_recording'
+                )
+            );
+
+            ?>
+            <span class="recordingStatus" id="_<?php echo $id; ?>_recording_status">0:00</span>
+            <br/>
+            <?php
+
+            // OK
+            echo $this->Form->button(
+                'recording',
+                array(
+                    'value' => __('Submit recording', true),
+                    'id' => '_'.$id.'_submit_recording'
+                )
+            );
+
+            // Cancel
+            echo $this->Form->button(
+                'recording',
+                array(
+                    'value' => __('Cancel', true),
+                    'id' => '_'.$id.'_cancel_recording'
+                )
+            );
+
+            // Warning
+            ?>
+            <div class="important">
+            <p>
+            <?php
+            // TODO: Ask only natives to submit? Describe recording process?
+            ?>
+            </p>
+
+            </div>
+
         </div>
         <?php
     }
@@ -616,6 +701,7 @@ class SentencesHelper extends AppHelper
      */
     public function javascriptForAJAXSentencesGroup() {
         echo $this->Javascript->link('sentences.add_translation.js', true);
+        echo $this->Javascript->link('sentences.add_recording.js', true);
         echo $this->Javascript->link('favorites.add.js', true);
         echo $this->Javascript->link('sentences_lists.menu.js', true);
         echo $this->Javascript->link('sentences.adopt.js', true);

@@ -23,7 +23,7 @@ $(document).ready(function() {
         var sentenceId = $(this).data("sentenceId");
         var parentOwnerName = $(this).data("parentOwnerName");
         var withAudio = $(this).data("withAudio");
-        
+
         var rootUrl = get_tatoeba_root_url();
 
         /*
@@ -36,9 +36,9 @@ $(document).ready(function() {
             if($.trim(sentenceText) != ""){
                 unbind(); // very important
                 // This unbind() applies for the submit button and input field.
-                
+
                 sentenceText = normalized_sentence(sentenceText);
-                
+
                 $("#_" + sentenceId + "_translations").show();
                 $("#_" + sentenceId + "_loading").show();
                 $(".addTranslations").hide();
@@ -63,11 +63,11 @@ $(document).ready(function() {
 
             }
         }
-        
+
         /*
-         * Function to unbind the handlers binded to the submit button, input field 
-         * and cancel button. It is very important to unbind, otherwise a same 
-         * translation will be save as many times as the user clicked on the 
+         * Function to unbind the handlers binded to the submit button, input field
+         * and cancel button. It is very important to unbind, otherwise a same
+         * translation will be save as many times as the user clicked on the
          * "translate" icon.
          */
         function unbind(){
@@ -75,17 +75,17 @@ $(document).ready(function() {
             $("#_" + sentenceId + "_text").unbind('keypress');
             $("#_" + sentenceId + "_cancel").unbind('click');
         }
-        
+
         // Displaying translation input and hiding translations
+        $(".sentenceForm, #_" + sentenceId + "_translations").hide();
         $("#translation_for_" + sentenceId).show();
         $("#_" + sentenceId + "_text").focus();
-        $("#_" + sentenceId + "_translations").hide();
-        
+
         // Submitting translation by clicking on button
         $("#_" + sentenceId + "_submit").click(function(){
             save();
         });
-        
+
         // Submitting translation by pressing enter
         // NOTE : this is annoying when entering Japanese or Chinese because
         // enter is used to validate the choice of kanjis
@@ -95,7 +95,7 @@ $(document).ready(function() {
                 save();
             }
         });
-        
+
         // Cancel
         $("#_" + sentenceId + "_cancel").click(function(){
             unbind(); // very important

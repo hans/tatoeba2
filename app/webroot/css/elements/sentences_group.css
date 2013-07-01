@@ -192,9 +192,13 @@ a.romanization {
 }
 
 
-/* 
- * Audio 
+/*
+ * Audio
  */
+.addRecording {
+  display: none;
+}
+
 .audioButton {
     margin: 6px;
     float: right;
