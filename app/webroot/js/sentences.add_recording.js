@@ -25,6 +25,11 @@ $(document).ready(function() {
 
     var rootUrl = get_tatoeba_root_url();
 
+    // Initialize recorder
+    Recorder.initialize({
+      swfSrc: '/swf/recorder.swf'
+    });
+
     /*
      * Save translation.
      */
@@ -65,22 +70,61 @@ $(document).ready(function() {
      * "translate" icon.
      */
     function unbind() {
-      $("#_" + sentenceId + "_submit").unbind('click');
-      $("#_" + sentenceId + "_text").unbind('keypress');
-      $("#_" + sentenceId + "_cancel").unbind('click');
+      $("#_" + sentenceId + "_record").unbind('click');
+      $("#_" + sentenceId + "_stop_record").unbind('click');
+      $("#_" + sentenceId + "_play_recording").unbind('click');
+      $("#_" + sentenceId + "_submit_recording").unbind('click');
+      $("#_" + sentenceId + "_cancel_recording").unbind('click');
     }
 
     // Displaying translation input and hiding translations
     $(".sentenceForm, #_" + sentenceId + "_translations").hide();
     $("#recording_for_" + sentenceId).show();
 
+    var statusElement = $('#_' + sentenceId + '_recording_status');
+
+    $('#_' + sentenceId + '_record').click(function() {
+      statusElement.text('0:00');
+
+      Recorder.record({
+        start: function() {
+          statusElement.addClass('active');
+        },
+
+        progress: function(ms) {
+          var seconds = Math.floor(ms / 1000) % 60;
+          var minutes = Math.floor(ms / 1000 / 60);
+
+          var secondsPadded = seconds < 10 ? '0' + seconds : seconds;
+
+          statusElement.text(minutes + ':' + secondsPadded);
+        }
+      });
+    });
+
+    $('#_' + sentenceId + '_stop_record').click(function() {
+      statusElement.removeClass('active');
+
+      Recorder.stop();
+    });
+
+    $('#_' + sentenceId + '_play_recording').click(function() {
+      Recorder.play();
+    });
+
     // Submit recording
     $("#_" + sentenceId + "_submit_recording").click(function() {
+      statusElement.removeClass('active');
+      Recorder.stop();
+
       // TODO
     });
 
     // Cancel
     $("#_" + sentenceId + "_cancel_recording").click(function() {
+      statusElement.removeClass('active');
+      Recorder.stop();
+
       unbind(); // very important
       $("#_" + sentenceId + "_translations").show();
       $(".addRecording").hide();

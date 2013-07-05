@@ -6,7 +6,7 @@
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -17,8 +17,8 @@
  */
 
 
-/* 
- * Sentence menu 
+/*
+ * Sentence menu
  */
 .sentences_set .menu {
     vertical-align: text-bottom;
@@ -52,7 +52,7 @@
 }
 
 
-/* 
+/*
  * Main sentences
  */
 .mainSentence {
@@ -65,7 +65,7 @@
 }
 
 
-/* 
+/*
  * Sentence
  */
 .sentenceContent .text {
@@ -106,8 +106,8 @@
 }
 
 
-/* 
- * Editing sentences 
+/*
+ * Editing sentences
  */
 .sentences_set div.submit {
     display: inline;
@@ -118,7 +118,7 @@
 }
 
 
-/* 
+/*
  * Romanization
  */
 .romanization {
@@ -138,8 +138,8 @@ a.romanization {
 }
 
 
-/* 
- * Edit in place 
+/*
+ * Edit in place
  */
 .editableSentence:hover {
     background: #EE8;
@@ -199,6 +199,10 @@ a.romanization {
   display: none;
 }
 
+.recordingStatus.active {
+    color: #75C34B;
+}
+
 .audioButton {
     margin: 6px;
     float: right;
@@ -220,8 +224,8 @@ a.romanization {
 }
 
 
-/* 
- * My sentences 
+/*
+ * My sentences
  */
 .infoIcon {
     float: left;
